@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="bg-white p-5">
+  <h3 class="text-4xl font-semibold m-5">{{ title }}</h3>
+
+  <form class="flex flex-col py-5 px-10 justify-center gap-2" method="POST">
+    {% csrf_token %}
+    <label for="title" class="self-start">Title:</label>
+    <input class="border border-gray-400" type="text" name="title" id="title" value="{{ post.title }}">
+    <label for="image" class="self-start">Image url:</label>
+    <input class="border border-gray-400" type="text" name="image" id="image" value="{{ post.image }}">
+    <label for="content">Content:</label>
+    <textarea name="content" id="content" class="border border-gray-400 p-2" cols="30" rows="10">{{ post.content }}</textarea>
+    <button class="self-start bg-black text-white rounded-sm py-2 px-4">Save</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="w-full">
+  <div class="flex items-center justify-between">
+    <h1 class="text-4xl font-semibold">Weclome back {{ user.username }}!</h1>
+    <a class="bg-black text-white py-2 px-3 rounded-md" href="/posts/create">New post +</a>
+  </div>
+
+
+  <section class="p-5">
+    <h3 class="mb-4 text-2xl font-semibold">Recent posts:</h3>
+    <div class="flex gap-4 snap-x overflow-auto py-3">
+      {% for post in posts %}
+        <div class="w-72 span-center relative bg-white rounded-md p-4" href="{% url 'post_details' post.id %}">
+          <img class="w-64 h-52 rounded-md" src="{{ post.image }}" alt="post image" />
+          <div class="bg-white relative h-36 w-64 p-2">
+            <p class="font-semibold">{{ post.title }}</p>
+            <div class="flex absolute bottom-8 gap-3 my-2">
+              <a class="bg-black text-sm text-white px-3 py-1" href="{% url 'post_details' post.id %}">Read</a>
+              <a class="bg-black text-sm text-white px-4 py-1" href="{% url 'update_post' post.id %}">Edit</a>
+              <form action="{% url 'delete_post' post.id %}" method="POST">
+                {% csrf_token %}
+                <button class="bg-red-600 text-sm text-white px-2 py-1">Delete</button>
+              </form>
+            </div>
+            <p class="absolute bottom-2 text-gray-600">{{ post.created_at }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="bg-white p-10">
+  <img class="h-64 md:h-96 w-full rounded-lg" src="{{ post.image }}" alt="cover image">
+
+  <article class="p-8 border border-gray-300 rounded-md">
+    <h2 class="text-4xl font-semibold">{{ post.title }}</h2>
+    <p class="font-semibold text-gray-600 mt-1">Written by: {{ user.username }}</p>
+    <p class="font-semibold text-gray-500 text-sm mt-1 mb-5">{{ post.created_at }}</p>
+    
+    <p class="text-gray-600">{{ post.content }}</p>
+  </article>
+  <hr class="border border-gray-300 mt-10" />
+  <form action="{% url 'create_comment' post.id %}" method="POST" class="mt-5 flex flex-col">
+    {% csrf_token %}
+    <label>Comment:</label>
+    <textarea class="mt-2 border border-gray-300" name="description"></textarea>
+    <button class="bg-black text-white w-20 mt-3 rounded-sm py-1">Comment</button>
+  </form>
+
+  <section class="mt-10">
+    <h3 class="font-semibold mb-2">Comments ({{ count }})</h3>
+    {% for comment in comments %}
+    <article class="border border-gray-300 p-4 mb-4 rounded-md">
+      <p class="font-semibold">{{ comment.user.username }}</p>
+      <p class="text-sm text-gray-500">{{ comment.description }}</p>
+    </article>
+    {% endfor %}
+  </section>
+
+</section>
+{% endblock %}
